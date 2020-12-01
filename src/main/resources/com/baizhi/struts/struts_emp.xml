@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <package name="emp" extends="struts-default" namespace="/emp">
+        <global-results>
+            <result name="selectAll" type="redirectAction">selectAll</result>
+        </global-results>
+        <action name="*" class="empAction" method="{1}">
+            <result name="update">/emp/update.jsp</result>
+            <result name="showAll">/emp/emplist.jsp</result>
+        </action>
+    </package>
+</struts>

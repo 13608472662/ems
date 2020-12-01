@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+
+
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--注解扫描...创建对象-->
+    <context:component-scan base-package="com.baizhi"/>
+    <!--配置文件-->
+    <context:property-placeholder location="classpath:db.properties"/>
+    <!--数据源-->
+    <bean class="com.alibaba.druid.pool.DruidDataSource" id="dataSource">
+        <property name="driverClassName" value="${mysql.driver}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.pass}"/>
+    </bean>
+
+    <!--SqlSessionFactory-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:com/baizhi/mapper/*.xml"/>
+        <property name="typeAliasesPackage" value="com.baizhi.entity"/>
+    </bean>
+    <!--dao-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.baizhi.dao"/>
+    </bean>
+    <!--事务管理器-->
+    <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="manager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--让业务中的注解生效-->
+    <tx:annotation-driven transaction-manager="manager"/>
+    <!--通知-->
+    <!--<tx:advice transaction-manager="manager" id="advice">
+        <tx:attributes>
+            <tx:method name="*register*"/>
+            <tx:method name="*update*"/>
+            <tx:method name="*delete*"/>
+            <tx:method name="*login*" propagation="SUPPORTS"/>
+            <tx:method name="*selectAll*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+    &lt;!&ndash;配置切面&ndash;&gt;
+    <aop:config>
+        <aop:pointcut id="cp" expression="within(com.baizhi.service..*ServiceImpl)"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="cp"/>
+    </aop:config>
+-->
+
+    <!--service-->
+    <!--<bean class="com.baizhi.service.EmpServiceImpl" id="empService">
+        <property name="empDao" ref="empDao"/>
+    </bean>
+    <bean class="com.baizhi.service.UserServiceImpl" id="userService">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+    &lt;!&ndash;action&ndash;&gt;
+    <bean class="com.baizhi.action.EmpAction" id="empAction" scope="prototype">
+        <property name="empService" ref="empService"/>
+    </bean>
+    <bean class="com.baizhi.action.UserAction" id="userAction" scope="prototype">
+        <property name="userService" ref="userService"/>
+    </bean>-->
+    <!--引入分支-->
+    <!-- <import resource="classpath:"/>-->
+</beans>

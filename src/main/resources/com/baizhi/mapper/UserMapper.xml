@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDao">
+    <sql id="mysql">
+        id,username,realname,password,sex
+    </sql>
+    <!--登录-->
+    <select id="login" parameterType="String" resultType="com.baizhi.entity.User">
+        select
+        <include refid="mysql"/>
+        from t_user where username=#{name}
+    </select>
+
+    <!--注册-->
+    <insert id="register" parameterType="com.baizhi.entity.User">
+        insert into t_user values(#{id},#{username},#{realname},#{password},#{sex})
+    </insert>
+</mapper>
