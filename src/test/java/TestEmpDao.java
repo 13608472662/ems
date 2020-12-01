@@ -11,6 +11,7 @@ public class TestEmpDao {
         //context.close();
         EmpService userService = (EmpService) context.getBean("empService");
         Emp emp = userService.login("1");
+
         System.out.println(emp);
     }
 }
